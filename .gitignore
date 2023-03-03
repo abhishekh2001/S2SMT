@@ -131,3 +131,4 @@ dmypy.json
 data/
 models/
 *.pt
+.ipynb_checkpoints/
