@@ -24,7 +24,7 @@ def er(sr, tg):
     for i, v in zip(sr, tg):
         inc += (i != v)
 
-    return inc / len(sr)
+    return inc / len(tg)
 
 
 fname = "../results/asr/test_res.csv"
