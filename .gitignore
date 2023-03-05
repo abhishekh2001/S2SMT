@@ -132,3 +132,5 @@ data/
 models/
 *.pt
 .ipynb_checkpoints/
+kaldi/
+data_flatten/
