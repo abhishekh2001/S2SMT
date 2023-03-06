@@ -37,3 +37,40 @@ An interesting observation is in the labelling of sequence "428OOO9A" where the 
 Once the phonemes are captured, an algorithms classifies and groups these phonemes greedily and assignes the appropriate value to it. The final ASR output is stored in `results/asr/test_res.csv`.
 
 This approach gives us 100% accuracy in speech recogntition.
+
+## Machine Translation
+
+Tensorflow with Keras is used to create an encoder-decoder architecture.
+
+Architecture:
+
+```
+Layer (type)                    Output Shape         Param #     Connected to
+==================================================================================================
+input_5 (InputLayer)            (None, None)         0
+__________________________________________________________________________________________________
+input_6 (InputLayer)            (None, None)         0
+__________________________________________________________________________________________________
+embedding_3 (Embedding)         (None, None, 200)    2000        input_5[0][0]
+__________________________________________________________________________________________________
+embedding_4 (Embedding)         (None, None, 200)    2600        input_6[0][0]
+__________________________________________________________________________________________________
+lstm_3 (LSTM)                   [(None, 200), (None, 320800      embedding_3[0][0]
+__________________________________________________________________________________________________
+lstm_4 (LSTM)                   [(None, None, 200),  320800      embedding_4[0][0]
+                                                                 lstm_3[0][1]
+                                                                 lstm_3[0][2]
+__________________________________________________________________________________________________
+dense_2 (Dense)                 (None, None, 13)     2613        lstm_4[0][0]
+==================================================================================================
+Total params: 648,813
+Trainable params: 648,813
+Non-trainable params: 0
+```
+
+Sample:
+
+```
+one one one two two three
+एक एक दो एक दो तीन
+```
