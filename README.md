@@ -17,7 +17,7 @@ The training procedure is as follows (note that all files for training that have
   - Align delta-based triphones
   - Train delta + delta-delta triphones (2500 HMM states and 15,000 Gaussians)
   - Align delta + delta-delta triphones
-  - Train LDA-MLLT (Linear Discriminant Analysis – Maximum Likelihood Linear Transform) triphones (3500 states and 20,000 gaussians)
+  - Train LDA-MLLT triphones (Linear Discriminant Analysis – Maximum Likelihood Linear Transform) (3500 states and 20,000 gaussians)
   - Align LDA-MLLT triphones with FMLLR (Feature space maximum likelihood linear regression)
   - Train SAT triphones (speaker adaptive training) (4200 states and 40,000 gaussians) reduces variability between speakers. -- `tri4a`.
 
@@ -38,7 +38,7 @@ Once the phonemes are captured, an algorithms classifies and groups these phonem
 
 ## Machine Translation
 
-Tensorflow is used to create an encoder-decoder architecture trained on 15,000 datapoints for 50 epochs. The final translation results using the model is found in `results/mt/mt_res.csv` where the column `hindi_target` is the ground truth and the column `hindi_translated` is the hypothesis.
+Tensorflow is used to create an encoder-decoder architecture trained on 15,000 datapoints for 50 epochs. The final translation results using the model is found in `results/mt/mt_res.csv` where the column `hindi_target` is the ground truth and the column `hindi_translated` is the hypothesis. The model weights are at: [en_hi_weights.h5](https://iiitaphyd-my.sharepoint.com/:f:/g/personal/abhishekh_sivakumar_students_iiit_ac_in/EoH8w_GCcdRGhA277upbpmUB6Zv_GuMkCaioz1xmzzCoQw?e=keyEPf)
 
 Architecture:
 
