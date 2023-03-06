@@ -1,4 +1,5 @@
 import pandas as pd
+import jiwer
 
 totext = {
     "0": "zero",
@@ -18,26 +19,25 @@ totext = {
 
 def er(sr, tg):
     sr = sr.split(' ')[1:]
-    tg = [totext[x].upper() for x in tg]
+    tg = [totext[x].lower() for x in tg]
 
-    inc = 0
-    for i, v in zip(sr, tg):
-        inc += (i != v)
-
-    return inc / len(sr)
+    return ' '.join(sr).lower(), ' '.join(tg).lower()
 
 
 fname = "../results/asr/test_res.csv"
 df = pd.read_csv(fname, usecols=['file', 'transcript'])
 
-tot_err = 0
+ground_truth = []
+hypothesis = []
 for i, row in df.iterrows():
     fname = row['file']
     trans = row['transcript']
 
     tg = fname.split('.')[0].split('_')[-1][:-1]
-    tot_err += er(trans, tg)
+    hp, gt = er(trans, tg)
+    ground_truth.append(gt)
+    hypothesis.append(hp)
 
-tot_err = tot_err / len(df)
+print(ground_truth[0], hypothesis[0])
 
-print(tot_err)
+print("word error rate: ", jiwer.wer(ground_truth, hypothesis))
