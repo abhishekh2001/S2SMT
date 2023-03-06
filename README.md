@@ -36,11 +36,9 @@ An interesting observation is in the labelling of sequence "428OOO9A" where the 
 
 Once the phonemes are captured, an algorithms classifies and groups these phonemes greedily and assignes the appropriate value to it. The final ASR output is stored in `results/asr/test_res.csv`.
 
-This approach gives us 100% accuracy in speech recogntition.
-
 ## Machine Translation
 
-Tensorflow with Keras is used to create an encoder-decoder architecture.
+Tensorflow is used to create an encoder-decoder architecture trained on 15,000 datapoints for 50 epochs. The final translation results using the model is found in `results/mt/mt_res.csv` where the column `hindi_target` is the ground truth and the column `hindi_translated` is the hypothesis.
 
 Architecture:
 
@@ -74,3 +72,5 @@ Sample:
 one one one two two three
 एक एक दो एक दो तीन
 ```
+
+The approach gives us a WER of 0.0103
