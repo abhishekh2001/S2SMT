@@ -10,6 +10,11 @@ with open("lexicon.txt", "r") as f:
         if l[0] == '<oov>':
             continue
         lex[l[0]] = [l[1:]]
+lex['one'].append(['hh', 'w', 'ah', 'n'])
+lex['two'].append(['t', 'uw'])
+
+
+print(lex)
 
 
 def get_transcript(ph_seq):
@@ -22,7 +27,7 @@ def get_transcript(ph_seq):
             continue
         cur_seq.append(ph)
         for k in lex:
-            match = False 
+            match = False
             for types in lex[k]:
                 if cur_seq == types:
                     match = True
@@ -55,7 +60,8 @@ j = 0
 for f in file_dets:
     seq = [x[1] for x in sorted(file_dets[f])]
     tr = get_transcript(seq)
-    final_df = final_df.append(pd.Series([f, ' '.join(seq), tr], index=final_df.columns), ignore_index=True)
+    final_df = final_df.append(
+        pd.Series([f, ' '.join(seq), tr], index=final_df.columns), ignore_index=True)
 
     # if j == 4:
     #     exit()

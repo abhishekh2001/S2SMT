@@ -1,5 +1,12 @@
 import os
 import csv
+import argparse
+
+parser = argparse.ArgumentParser(description='init preprocessing')
+parser.add_argument("--train", action="store_true")
+parser.add_argument("--test", action="store_true")
+parser.add_argument("--inference", action="store_true")
+
 
 totext = {
     "0": "zero",
@@ -12,6 +19,7 @@ totext = {
     "7": "seven",
     "8": "eight",
     "9": "nine",
+    "o": "oh"
 }
 
 
@@ -27,10 +35,10 @@ def gen_fdets(root_dir, out_fname):
                 file_sizes.append(os.path.getsize(
                     os.path.join(root, file)))
                 tscpt = os.path.splitext(file)[0][:-1]
-                tscpt = tscpt.replace("O", "0")
                 tscpt = tscpt.replace("Z", "0")
                 tscpt = " ".join(tscpt.split()).lower()
-                tscpt = " ".join([totext[x] if x in totext.keys() else x for x in tscpt])
+                tscpt = " ".join(
+                    [totext[x] if x in totext.keys() else x for x in tscpt])
                 transcripts.append(tscpt)
 
     print("writing ", out_fname)
@@ -48,10 +56,18 @@ def gen_fdets(root_dir, out_fname):
     csv_file.close()
 
 
-# directory to search for .wav files
-root_dir = "../data/"
-train_dir = os.path.join(root_dir, "TRAIN")
-test_dir = os.path.join(root_dir, "TEST")
+if __name__ == '__main__':
+    args = parser.parse_args()
 
-gen_fdets(train_dir, "train.csv")
-gen_fdets(test_dir, "test.csv")
+    # directory to search for .wav files
+    root_dir = "../data/"
+    train_dir = os.path.join(root_dir, "TRAIN")
+    test_dir = os.path.join(root_dir, "TEST")
+    inf_dir = os.path.join(root_dir, "INFERENCE")
+
+    if args.train:
+        gen_fdets(train_dir, "train.csv")
+    if args.test:
+        gen_fdets(test_dir, "test.csv")
+    if args.inference:
+        gen_fdets(inf_dir, "inf.csv")
