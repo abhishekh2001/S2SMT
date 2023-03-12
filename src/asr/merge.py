@@ -71,4 +71,15 @@ for f in file_dets:
 
     j += 1
 
-final_df.to_csv('res.csv')
+
+final_df.to_csv('../results/asr/inf1/res.csv')
+
+ph_seq_df = pd.DataFrame(columns=['file', 'start', 'phoneme'])
+for i, fname in enumerate(file_dets):
+    if i > 15:
+        break
+    for duration, ph in sorted(file_dets[fname]):
+        ph_seq_df = ph_seq_df.append(
+            pd.Series([fname, duration, ph], index=ph_seq_df.columns), ignore_index=True)
+
+ph_seq_df.to_csv('../results/asr/inf1/ph_ali.csv')
