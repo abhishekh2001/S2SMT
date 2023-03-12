@@ -20,6 +20,7 @@ ctm3$start_real <- ctm3$start + ctm3$start_utt
 ctm3$end_real <- ctm3$start_utt + ctm3$dur
 
 print(nrow(ctm2))
+print(nrow(ctm3))
 
 write.table(ctm3, "./final_ali.txt", row.names=F, quote=F, sep="\t")
 

@@ -1,0 +1,43 @@
+# preprocess
+
+// wav files in data/inference/
+python preprocess.py
+python gen_train_details.py
+
+# kaldi
+
+// kaldi dat in data/inf
+./utils/fix_data_dir.sh data/inf
+
+mfccdir=mfcc
+
+/*
+    for x in data/inf
+    do
+        steps/make_mfcc.sh --cmd "$train_cmd" $x exp/make_mfcc/$x $mfccdir
+        utils/fix_data_dir.sh data/inf
+        steps/compute_cmvn_stats.sh $x exp/make_mfcc/$x $mfccdir
+        utils/fix_data_dir.sh data/inf
+    done
+*/
+
+for x in data/inf
+do
+steps/make_mfcc.sh --cmd "$train_cmd" --nj 2 $x exp/make_mfcc/$x $mfccdir
+utils/fix_data_dir.sh data/inf
+steps/compute_cmvn_stats.sh $x exp/make_mfcc/$x $mfccdir
+utils/fix_data_dir.sh data/inf
+done
+
+steps/align_si.sh --cmd "$train_cmd" data/inf data/lang exp/tri4a exp/tri4a_inf
+
+for i in  exp/tri4a_inf/ali.*.gz;
+do src/bin/ali-to-phones --ctm-output exp/tri4a/final.mdl \
+ark:"gunzip -c $i|" -> ${i%.gz}.ctm;
+done;
+
+cd exp/tri4a_inf
+cat *.ctm > merged_alignment.txt
+
+cp /media/asivakumar/Data/Documents/ssmt/src/asr/id2phone.R .
+Rscript id2phone.R

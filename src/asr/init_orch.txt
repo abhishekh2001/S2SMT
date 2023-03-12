@@ -1,0 +1,9 @@
+// copy data files
+mkdir -p exp conf data data/train data/lang data/local data/local/lang
+// copy language files
+cp -r /home/asivakumar/Documents/kaldi/egs/tmp_train/kfd/* data/local/lang
+
+./utils/fix_data_dir.sh data/train
+
+// prepare lexicon, silence, etc...
+./utils/prepare_lang.sh data/local/lang '<oov>' data/local/ data/lang
