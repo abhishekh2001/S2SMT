@@ -1,12 +1,15 @@
 from collections import defaultdict
 import pandas as pd
+import pprint
+
+pp = pprint.PrettyPrinter()
 
 file_dets = defaultdict()
 
 lex = {}
-with open("lexicon.txt", "r") as f:
+with open("../utils/kaldi_dat/lexicon.txt", "r") as f:
     for line in f:
-        l = line.split()
+        l = line.lower().split()
         if l[0] == '<oov>':
             continue
         lex[l[0]] = [l[1:]]
@@ -14,7 +17,7 @@ lex['one'].append(['hh', 'w', 'ah', 'n'])
 lex['two'].append(['t', 'uw'])
 
 
-print(lex)
+pp.pprint(lex)
 
 
 def get_transcript(ph_seq):
@@ -22,7 +25,7 @@ def get_transcript(ph_seq):
     res = ''
     for s in ph_seq:
         ph = s.split('_')[0]
-        if ph == 'SIL':
+        if ph == 'sil':
             cur_seq = []
             continue
         cur_seq.append(ph)
@@ -42,7 +45,7 @@ def get_transcript(ph_seq):
     return res
 
 
-with open("final_ali.txt", "r") as f:
+with open("../results/asr/inf1/final_ali.txt", "r") as f:
     next(f)
     for line in f:
         d = line.split('\t')
